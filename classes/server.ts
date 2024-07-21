@@ -1,6 +1,6 @@
 
 import express from 'express';
-import { SERVER_PORT } from '../global/environment'
+import { SERVER_PORT, wsUrlApp } from '../global/environment'
 import http from 'http';
 import socketIO from "socket.io";
 
@@ -21,7 +21,13 @@ export default class Server {
         this.port = SERVER_PORT;
 
         this.httpServer = http.createServer(this.app);
-        this.io = new socketIO.Server( this.httpServer );
+        this.io = new socketIO.Server(this.httpServer, {
+                cors: {
+                    origin: wsUrlApp ,
+                    //allowedHeaders: ["my-custom-header"],
+                    credentials: true
+                }
+            });
 
         this.hearSockets();
 
