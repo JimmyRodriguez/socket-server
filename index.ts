@@ -5,13 +5,19 @@ import cors from 'cors';
 
 const server = Server.intance;
 
+
+const corsOptions = {
+    origin: true,
+    credentials: true,
+};
+
+
 //BodyParser
 server.app.use(bodyParser.urlencoded({extended: true}));
 server.app.use(bodyParser.json());
 
 //CORS
-server.app.use( cors({origin: true, credentials: true}))
-
+server.app.use(cors(corsOptions))
 
 //Rutas de Servicios
 server.app.use('/', router)
